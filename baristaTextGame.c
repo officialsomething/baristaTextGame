@@ -7,7 +7,7 @@
 /*
 Terminal commands
 
-gcc baristaTextGame.c baristaTextGameLogic.c baristaTextStruct.c util.c -o baristaTextGame
+gcc baristaTextGame.c baristaTextGameLogic.c util.c -o baristaTextGame
 ./baristaTextGame
 
 clear terminal: ctrl + l

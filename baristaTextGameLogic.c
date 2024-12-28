@@ -6,24 +6,12 @@
 #include "struct.h"
 
 
-// forward declare some stuff
-int startOrder();
-void buildDrink();
-void buildLatte();
-
-
-
 // passing char *usrInput and char usrInput[] are functionally the same
 void strtHere(char *usrInput) {
 
-    // Acceptable input parameters
-    char YES[] = "yes";
-    char NO[] = "no";
+    int resultCompare = yesOrNo(usrInput);
 
-    int compareYES = strcmp(usrInput, YES);
-    int compareNO = strcmp(usrInput, NO);
-
-    if(compareYES == 0) {
+    if(resultCompare == 1) {
         printf("Great! I love making coffee :)\n");
         printf("How many drinks are we ordering today? Please choose a number between 1-10.\n");
 
@@ -31,7 +19,7 @@ void strtHere(char *usrInput) {
         scanf("%d", &numItems);
         startOrder(numItems);
     }
-    else if(compareNO == 0) {
+    else if(resultCompare == 2) {
         printf("Why did you come to a coffee shop then?\n");
         printf("Goodbye!\n");
     }
@@ -49,6 +37,12 @@ void strtHere(char *usrInput) {
 
 int startOrder(int numItems) {
 
+
+    /*
+    purpose of while loop is to repeatedly prompt user if they input a number not in range
+    if number is smaller than 1 or bigger than 10, try again
+    once an appropriate number has been reached, break
+    */
     while(numItems < 1 || numItems > 10) {
         printf("Oh no! I can't make that many.\n");
         printf("Please enter a number between 1-10.\n");
@@ -80,23 +74,19 @@ int startOrder(int numItems) {
 
 
 void buildDrink() {
-    char YES[] = "yes";
-    char NO[] = "no";
     char userPref[50];
 
     printf("Would you like a milk drink, like a latte or mocha?\n");
 
     scanf("%s", userPref);
+    int resultCompare = yesOrNo(userPref);
 
-    int compareYES = strcmp(userPref, YES);
-    int compareNO = strcmp(userPref, NO);
-
-    if(compareYES == 0) {
+    if(resultCompare == 1) {
         buildLatte();
 
         resetInput(userPref);
     }
-    else if(compareNO == 0) {
+    else if(resultCompare == 2) {
         printf("Haven't made it here.\n");
     }
     else {
