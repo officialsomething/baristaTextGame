@@ -9,9 +9,9 @@ void resetInput(char *str);
 int yesOrNo(char *str);
 
 // from logic
-int startOrder();
 void buildDrink();
 void buildLatte();
+void startOrder(int numItems);
 
 
 #endif

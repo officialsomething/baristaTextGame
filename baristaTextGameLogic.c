@@ -35,7 +35,7 @@ void strtHere(char *usrInput) {
 
 }
 
-int startOrder(int numItems) {
+void startOrder(int numItems) {
 
 
     /*
@@ -53,44 +53,65 @@ int startOrder(int numItems) {
         }
     }
 
-    dynamOrder *newOrder;
-    newOrder = calloc(numItems, sizeof(dynamOrder));
+    // allocate memory for the order
+    struct dynamOrder *newOrder = malloc(sizeof(struct dynamOrder));
 
     if(newOrder == NULL) {
         printf("Memory not allocated.\n");
+        free(newOrder);
     }
     else {
-        newOrder->count = numItems;
-        newOrder->capacity = numItems * 4;
+        // allocate memory for the array holding each item ordered
+        newOrder->drinks = malloc(numItems * sizeof(struct menuItem*));
+        if(newOrder->drinks == NULL) {
+            printf("Memory not allocated.\n");
+            free(newOrder->drinks);
+        }
+        else {
+            // current number of drinks initialized to 0
+            // current array capacity is number of items wanting to order
+            newOrder->count = 0;
+            newOrder->capacity = numItems;
+            printf("Let's look at the menu together. Please type the corresponding number for what you'd like!\n");
+            buildDrink(newOrder);
+        }
 
-        printf("You ordered %d drinks\n",newOrder->count);
-        printf("Array capacity is %d\n",newOrder->capacity);
     }
-
-    return 0;
 
 }
 
 
 
-void buildDrink() {
-    char userPref[50];
+void buildDrink(struct dynamOrder *custieOrder) {
+    int userPref;
 
-    printf("Would you like a milk drink, like a latte or mocha?\n");
+    printf("Latte or mocha: 1\n");
+    printf("Americano: 2\n");
+    printf("Cold brew: 3\n");
+    printf("Hot coffee: 4\n");
 
-    scanf("%s", userPref);
-    int resultCompare = yesOrNo(userPref);
+    scanf("%d", &userPref);
 
-    if(resultCompare == 1) {
-        buildLatte();
+    while(userPref < 1 || userPref > 4) {
+        printf("Please enter a number between 1-4.\n");
 
-        resetInput(userPref);
+        scanf("%d",&userPref);
+        if(userPref > 0 && userPref < 5) {
+            break;
+        }
     }
-    else if(resultCompare == 2) {
-        printf("Haven't made it here.\n");
+
+    if(userPref == 1) {
+        printf("You ordered a latte or mocha!\n");
     }
-    else {
-        printf("I didn't understand. Would you like a milk drink?\n");
+    else if(userPref == 2) {
+        printf("You ordered an americano!\n");
+    }
+    else if(userPref == 3) {
+        printf("You ordered a cold brew!\n");
+    }
+    else if(userPref == 4) {
+        printf("You ordered a hot coffee!\n");
     }
 
 }
